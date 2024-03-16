@@ -1,11 +1,14 @@
+import "express-async-errors";
 import express from "express";
 import morgan from "morgan";
+import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 dotenv.config();
 const app = express();
 
 // routers
 import jobRouter from "./routes/jobRouter.js";
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -28,13 +31,16 @@ app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ msg: "Something went wrong" });
-});
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  console.log(`Server is listening on PORT ${port}...`);
-});
+try {
+  await mongoose.connect(process.env.MONGO_URL);
+  app.listen(port, () => {
+    console.log(`Server is listening on PORT ${port}...`);
+  });
+} catch (error) {
+  console.log(error);
+  process.exit(1);
+}
