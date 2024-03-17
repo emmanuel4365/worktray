@@ -4,6 +4,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import { body, validationResult } from "express-validator";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+import authRouter from "./routes/authRouter.js";
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });
