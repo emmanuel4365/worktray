@@ -2,28 +2,24 @@ import "express-async-errors";
 import express from "express";
 import morgan from "morgan";
 import mongoose from "mongoose";
+import { body, validationResult } from "express-validator";
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+
 import * as dotenv from "dotenv";
 dotenv.config();
 const app = express();
+app.use(express.json());
 
 // routers
 import jobRouter from "./routes/jobRouter.js";
-import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.post("/", (req, res) => {
-  console.log(req);
-  res.json({ msg: "data received", data: req.body });
-});
-
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
-app.use(express.json());
 
 app.use("/api/v1/jobs", jobRouter);
 
