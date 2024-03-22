@@ -38,3 +38,11 @@ export const getUsers = async (req, res) => {
   const users = await User.find({});
   res.status(StatusCodes.OK).json({ users });
 };
+
+export const logout = (req, res) => {
+  res.cookie("token", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(StatusCodes.OK).json({ msg: "user logged out!" });
+};
