@@ -1,7 +1,10 @@
 import { Router } from "express";
 const router = Router();
 import { validateUpdateUserInput } from "../middleware/validationMiddleware.js";
-import { authorizePermissions } from "../middleware/authMiddleware.js";
+import {
+  authorizePermissions,
+  checkForTestUser,
+} from "../middleware/authMiddleware.js";
 
 import {
   getCurrentUser,
@@ -18,6 +21,7 @@ router.get(
 );
 router.patch(
   "/update-user",
+  checkForTestUser,
   upload.single("avatar"),
   validateUpdateUserInput,
   updateUser
