@@ -31,7 +31,7 @@ export const checkDefaultTheme = () => {
   return isDarkTheme;
 };
 
-// checkDefaultTheme();
+checkDefaultTheme();
 
 const router = createBrowserRouter([
   {
