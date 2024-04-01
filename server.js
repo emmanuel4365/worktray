@@ -4,6 +4,9 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
+
 //middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 import { authenticateUser } from "./middleware/authMiddleware.js";
@@ -26,6 +29,9 @@ app.use(express.static(path.resolve(__dirname, "./client/dist")));
 
 app.use(cookieParser());
 app.use(express.json());
+
+app.use(helmet());
+app.use(mongoSanitize());
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
