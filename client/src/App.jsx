@@ -10,6 +10,7 @@ import { action as deleteJobAction } from "./pages/DeleteJob";
 import { action as profileAction } from "./pages/Profile";
 import { loader as adminLoader } from "./pages/Admin";
 import { loader as statLoader } from "./pages/Stats";
+import { loader as homeLoader } from "./pages/HomeLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <HomeLayout />,
     errorElement: <Error />,
+    loader: homeLoader,
     children: [
       {
         index: true,

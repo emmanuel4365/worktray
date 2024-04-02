@@ -10,9 +10,11 @@ export const action = async ({ request }) => {
   try {
     await customFetch.post("/auth/login", data);
     toast.success("Login successful");
+    localStorage.setItem("loggedout", "false");
     return redirect("/dashboard");
   } catch (error) {
-    toast.error(error?.response?.data?.msg);
+    // toast.error(error?.response?.data?.msg);
+    console.log(error.response.data.msg);
     return error;
   }
 };
@@ -28,6 +30,7 @@ const Login = () => {
       await customFetch.post("/auth/login", data);
       toast.success("take a test drive");
       navigate("/dashboard");
+      localStorage.setItem("loggedout", "false");
     } catch (error) {
       toast.error(error?.response?.data?.msg);
     }

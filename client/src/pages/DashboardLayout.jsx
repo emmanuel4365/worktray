@@ -45,6 +45,8 @@ const DashboardLayout = () => {
   };
 
   const logoutUser = async () => {
+    const status = "true";
+    localStorage.setItem("loggedout", status);
     navigate("/");
     await customFetch.get("/auth/logout");
     toast.success("Logging out...");

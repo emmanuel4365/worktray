@@ -1,7 +1,7 @@
 {
   "name": "worktray",
   "version": "1.0.0",
-  "description": "",
+  "description": "Job Tracking App",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -11,8 +11,8 @@
     "client": "cd client && npm run dev",
     "dev": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["job tracker","job tracking","job stats"],
+  "author": "Omale Arumona",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
