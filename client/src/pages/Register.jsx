@@ -1,7 +1,7 @@
 import { Form, redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
-import { FormRow, Logo, SubmitBtn } from "../components";
+import { FormRow, Logo, PasswordInput, SubmitBtn } from "../components";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
 
@@ -25,26 +25,16 @@ const Register = () => {
         <Logo />
         <h4>Register</h4>
         <FormRow type="text" name="name" />
-        <FormRow
-          type="text"
-          name="lastName"
-          labelText="last name"
-          defaultValue="Arumona"
-        />
+        <FormRow type="text" name="lastName" labelText="last name" />
         <FormRow type="text" name="location" />
-        <FormRow
-          type="email"
-          name="email"
-          defaultValue="omalearumona@gmail.com"
-        />
-        <FormRow type="password" name="password" />
+        <FormRow type="email" name="email" />
+        <PasswordInput type="password" name="password" />
         <SubmitBtn formBtn />
         <p>
           Already a member?
           <Link to="/login" className="member-btn">
             Login
           </Link>
-          `
         </p>
       </Form>
     </Wrapper>

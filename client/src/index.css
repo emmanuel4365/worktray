@@ -69,6 +69,8 @@ html {
   --dark-mode-text-color: #f0f0f0;
   --dark-mode-bg-secondary-color: #3f3f3f;
   --dark-mode-text-secondary-color: var(--grey-300);
+  --password-dark-mode: white;
+  --password-text-color: #222;
 
   --background-color: var(--grey-50);
   --text-color: var(--grey-900);
@@ -81,6 +83,7 @@ html {
   --background-color: var(--dark-mode-bg-color);
   --text-secondary-color: var(--dark-mode-text-secondary-color);
   --background-secondary-color: var(--dark-mode-bg-secondary-color);
+  --password-text-color: var(--password-dark-mode)
 }
 
 body {
@@ -256,6 +259,7 @@ button:disabled {
   background: var(--background-color);
   border: 1px solid var(--grey-300);
   color: var(--text-color);
+  outline: none;
 }
 .form-input,
 .form-select,
@@ -278,6 +282,28 @@ button:disabled {
   letter-spacing: var(--letter-spacing);
   text-transform: capitalize;
 }
+
+.password-form-input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  width: 90%;
+  outline: none;
+  border: none;
+}
+
+.password-input-div {
+  height: 35px;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--border-radius);
+  background: var(--background-color);
+  border: 1px solid var(--grey-300);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
 /* alert */
 
 @keyframes spinner {

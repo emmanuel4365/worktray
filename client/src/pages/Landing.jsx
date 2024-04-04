@@ -34,9 +34,9 @@ const Landing = () => {
             job <span>tracking</span> app
           </h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat
-            nesciunt inventore ipsum animi rem corrupti aspernatur eius
-            laudantium autem adipisci.
+            An online job tracking software that takes the statistics of jobs
+            created in terms of status or type and presents them with user
+            friendly charts...
           </p>
           <Link to="/register" className="btn register-link">
             {userData && loggedout ? (
@@ -55,7 +55,7 @@ const Landing = () => {
                 navigate("/login");
               }}
             >
-              "Login / Demo User"
+              Login / Demo User
             </button>
           ) : (
             <button type="button" className="btn" onClick={logoutUser}>
