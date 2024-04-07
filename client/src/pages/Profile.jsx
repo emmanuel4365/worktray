@@ -30,7 +30,7 @@ const Profile = () => {
   return (
     <Wrapper>
       <Form method="post" className="form" encType="multipart/form-data">
-        <h4 className="form-title">profile</h4>
+        <h4 className="form-title">update profile</h4>
 
         <div className="form-center">
           <div className="form-row">
@@ -45,7 +45,12 @@ const Profile = () => {
               accept="image/*"
             />
           </div>
-          <FormRow type="text" name="name" defaultValue={name} />
+          <FormRow
+            type="text"
+            name="name"
+            labelText="first name"
+            defaultValue={name}
+          />
           <FormRow
             type="text"
             labelText="last name"

@@ -4,16 +4,19 @@ import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { Logo } from "../components";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Landing = () => {
-  const checkLogoutStatus = () => {
-    let newState = localStorage.getItem("loggedout") === "true";
-    return newState;
-  };
   const userData = useOutletContext();
-  const [loggedout, setLoggedout] = useState(checkLogoutStatus());
+  const [loggedout, setLoggedout] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let localStorageValue = localStorage.getItem("loggedout") === "false";
+    if (localStorageValue) {
+      setLoggedout(false);
+    }
+  }, []);
 
   const logoutUser = async () => {
     localStorage.setItem("loggedout", "true");
