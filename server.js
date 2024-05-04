@@ -6,6 +6,17 @@ import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
+import hpp from "hpp";
+import cors from "cors";
+
+//Rate Limiter
+import rateLimiter from "express-rate-limit";
+
+const apiLimiter = rateLimiter({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 20,
+  message: { msg: "IP rate limit exceeded, retry in 5 minutes." },
+});
 
 //middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
@@ -30,8 +41,11 @@ app.use(express.static(path.resolve(__dirname, "./client/dist")));
 app.use(cookieParser());
 app.use(express.json());
 
+//Security
+app.use(cors());
 app.use(helmet());
 app.use(mongoSanitize());
+app.use(hpp());
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -43,17 +57,17 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.get("/api/v1/test", (req, res) => {
-  res.json({ msg: "test route" });
-});
+// app.get("/api/v1/test", (req, res) => {
+//   res.json({ msg: "test route" });
+// });
 
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/auth", authRouter);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
+// });
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "Not Found" });
