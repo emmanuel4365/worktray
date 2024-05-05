@@ -36,7 +36,17 @@ const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.static(path.resolve(__dirname, "./client/dist")));
+// app.use(express.static(path.resolve(__dirname, "./client/dist")));
+// app.use(
+//   express.static("*", {
+//     setHeaders: function (res) {
+//       res.set(
+//         "Content-Security-Policy",
+//         "img-src https://res.cloudinary.com 'self'"
+//       );
+//     },
+//   })
+// );
 
 app.use(cookieParser());
 app.use(express.json());
@@ -46,6 +56,15 @@ app.use(cors());
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(hpp());
+
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//       "img-src": ["'self'", "https: data:"],
+//     },
+//   })
+// );
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -75,7 +94,7 @@ app.use("*", (req, res) => {
 
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 try {
   await mongoose.connect(process.env.MONGO_URL);
