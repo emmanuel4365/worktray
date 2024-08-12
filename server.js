@@ -4,10 +4,10 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
-import helmet from "helmet";
+// import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import hpp from "hpp";
-import cors from "cors";
+// import cors from "cors";
 
 //Rate Limiter
 import rateLimiter from "express-rate-limit";
@@ -36,35 +36,14 @@ const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// app.use(express.static(path.resolve(__dirname, "./client/dist")));
-// app.use(
-//   express.static("*", {
-//     setHeaders: function (res) {
-//       res.set(
-//         "Content-Security-Policy",
-//         "img-src https://res.cloudinary.com 'self'"
-//       );
-//     },
-//   })
-// );
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 
 app.use(cookieParser());
 app.use(express.json());
 
 //Security
-app.use(cors());
-app.use(helmet());
 app.use(mongoSanitize());
 app.use(hpp());
-
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     useDefaults: true,
-//     directives: {
-//       "img-src": ["'self'", "https: data:"],
-//     },
-//   })
-// );
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -76,9 +55,14 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// app.get("/api/v1/test", (req, res) => {
-//   res.json({ msg: "test route" });
-// });
+app.use(function (req, res, next) {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' https://res.cloudinary.com; font-src 'self'; style-src 'self' 'unsafe-inline'"
+  );
+
+  next();
+});
 
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
@@ -94,7 +78,7 @@ app.use("*", (req, res) => {
 
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 try {
   await mongoose.connect(process.env.MONGO_URL);
